@@ -1,0 +1,177 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Docs : Primary Keys</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>Primary Keys</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<b><a href="1.html">'Language Reference'</a></b><br />
+			<li><a href="2.html">Logical Operators</a></li><br />
+			<li><a href="3.html">Relational Operators</a></li><br />
+			<li><a href="4.html">Data Types</a></li><br />
+			<li><a href="5.html">Column Types</a></li><br />
+			<li><b>Primary Keys</b></li><br />
+			<li><a href="7.html">Functions</a></li><br />
+			<li><a href="8.html">Where Clauses</a></li><br />
+			<li><a href="9.html">LIKE Clauses</a></li><br />
+			<li><a href="10.html">Limit Clauses</a></li><br />
+			<li><a href="11.html">OrderBy Clauses</a></li><br />
+			<li><a href="12.html">Notes</a></li><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<a href="19.html">Database Functions</a><br />
+			<br />
+
+			<a href="28.html">Data Manipulation Functions</a><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="5.html">Last Section ( Column Types )</a></td>
+					<td align="center" width="33%"><font size="6">Primary Keys</font></td>
+					<td align="right" width="33%"><a href="7.html">Next Section ( Functions )</a> >></td>
+				</tr>
+			</table>
+
+			<hr size="1" color="#BBBBBB">
+
+			txtSQL has been designed to allow the use of primary keys. There are two ways to add them, and only one
+			way to drop them.<br /><br />
+			
+			To add primary keys when creating a table, specify the <a href="5.html">column type</a> 'primary' and set it
+			equal to 1. The column must be 'int' (integer) and 'auto_increment'.<br />
+			The other way to add a primary key is to use the <a href="38.html">altertable()</a> function.<br /><br />
+			
+			If you want to drop a primary key, you must also use the <a href="38#dropkey.html">altertable()</a> function.<br /><br />
+
+		<br /><br />			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>Primary Keys</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('6');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td bgcolor="#E0E0E0" colspan="2">
+						<b>Faraz Ali</b> <font size="1">&lt;SaiyanM at hotmail dot com&gt;<br />
+						July 30, 2004, 11:19 pm</font>
+						<table width="100%" cellspacing="0" cellpadding="3">
+							<tr>
+								<td bgcolor="#F0F0F0">
+									<font face="courier new" size="3"><code><font color="#000000">
+If you want to use primary keys in a where clause, set the column name as 'primary', it's a special column setup for you to use.<br /><br /><font color="#0000BB">&lt;?php<br />$sql</font><font color="#007700">-&gt;</font><font color="#0000BB">select</font><font color="#007700">(array(</font><font color="#DD0000">'table' </font><font color="#007700">=&gt; </font><font color="#DD0000">'table'</font><font color="#007700">,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'where' </font><font color="#007700">=&gt; array(</font><font color="#DD0000">'primary = 2'</font><font color="#007700">)));<br /></font><font color="#0000BB">?&gt;</font>
+</font>
+</code></font>								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+function not found!

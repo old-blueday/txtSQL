@@ -1,0 +1,331 @@
+<html>
+<head>
+<title>txtSQL 2.2 Final Readme</title>
+<style>
+A            { text-decoration: none; color: 003265; }
+A:hover      { text-decoration: none; color: 000000; }
+td, body     { font-family: Trebuchet MS; font-size: 11px; }
+</style>
+</head>
+<body style="line-height: 14px;">
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0">
+ <tr>
+  <td>
+   <h1>txtSQL 2.2 Final Readme</h1>
+   <a href="docs/index.html"><b>View official documentation</b></a><br>
+   <a href="changelog.txt"><b>View Changelog</b></a><br><br>
+
+   Welcome to the txtSQL 2.2 readme. This page should give you a heads up on how to get started in using txtSQL.
+   If you are done with this page and still require some help, try posting at <a href="http://chibiguy.dotgeek.org">our forums</a><br><br>
+
+   &nbsp;&nbsp;<a href="#step1">1- Extracting txtSQL</a><br>
+   &nbsp;&nbsp;<a href="#step2">2- Configuring the class file</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step2.1">2.1- Directory Structure</a><br>
+   &nbsp;&nbsp;<a href="#step3">3- Including the class file</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step3.1">3.1- Instantiating the class</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step3.2">3.2- Connecting to txtSQL</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step3.3">3.3- Changing the root password</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step3.4">3.4- Selecting a database</a><br>
+   &nbsp;&nbsp;<a href="#step4">4- Executing Commands</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step4.1">4.1- List of commands</a><br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#step4.2">4.2- Printing Results</a><br>
+   &nbsp;&nbsp;<a href="#step5">5- Disconnecting from txtSQL</a><br>
+   &nbsp;&nbsp;<a href="#err">6- Error handling</a><br>
+   &nbsp;&nbsp;<a href="#functions">7- Public txtSQL Functions</a><br>
+   <hr>
+
+   <a name="step1"><h3>1. Extracting txtSQL</h3></a>
+   <!------------------------------------------------------->
+   When you open the .zip file up, you will notice that there are two files; txtSQL.class.php, and txtSQL.core.php. Extract the two files
+   to the same directory.<br>
+   Create a folder with an arbitrary name; usually, it is named 'data'. This will be the folder containing the databases.<br>
+   It can be located anywhere on the server, but usually it is located
+   in the same folder as where you extracted the two files.<br>
+   <b>Make sure this directory is CHMOD'ed to 0755 or higher</b>.<br>
+   Now go back to the .zip archive and search for the file 'txtsql.MYI', and extract it to the data directory you just created.<br><br>
+   <B>OR</B><Br><br>
+   You can just copy the 'data' folder inside the .zip archive to your local harddrive.
+
+   <a name="step2"><h3>2. Configuring the class file</h3></a>
+   <!------------------------------------------------------->
+   <p>Step one in using txtSQL, is to configure the class file so that it may be included into the php files that may require it.
+   First, you must open the file 'txtSQL.class.php' in your favorite text editor; the one that I am currently using is
+   <a href="http://www.textpad.com">TextPad</a> which is freeware, and it has many tiny little features here and there. Once opening
+   the file up you will notice a copyright statement, followed by some other stuff. Following the comments is a line that contains the
+   following (line 30 by default):
+   <pre>
+   30. include_once('./txtSQL.core.php');
+   </pre>
+   What this line does is it includes the core functions and classes that are the workhorse of the txtSQL module. In order for php to
+   be able to find the core file, you must edit the argument, the text enclosed in the single quotes, and have it point to the 'txtSQL.core.php'
+   file.<br>
+   &nbsp;&nbsp;<b>OR</b><br>
+   Instead of having to alter the txtSQL.class.php file to point to the txtSQL.core.php, you can define a constant which will automatically
+   do it for you.
+   <pre>
+   &lt;?php
+   define('TXTSQL_CORE_PATH', 'PATH/TO/FOLDER/WITH/txtSQL_CORE_FILE');
+   include_once('./txtSQL.class.php');
+   ?&gt;
+   </pre>
+   This way, if the two scripts reside in two different folders, txtSQL will successfully be able to locate it with this constant.
+   <br><br>
+
+   <center><table width=95%><tr><td>
+   <a name="step2.1"><h4>2.1- Directory Structure</h4></a>
+   <!----------------------------------------------------------------->
+   A valid data directory structure consists of the following format:<pre>
++ datafolder ( folder with all the databases in them )
+  + database_name
+    + table.FRM (column definitions)
+    + table.MYD (row data)
+  + txtsql
+    + txtsql.MYI (included with package)
+</pre>
+   Basically, a database is a folder inside of the main datafolder.<br><br>
+   Also inside the datafolder is the txtsql
+   database, with the txtsql.MYI that comes with the package.<br><br>
+   Inside every database, a table is made
+   up of two files; table.FRM, and table.MYD. The .FRM is the column definitions, and the other is the
+   rows of data.
+   </td></tr></table></center>
+
+   <a name="step3"><h3>3. Including the class file</h3></a>
+   <!----------------------------------------------------------------->
+   Now that we are done configuring txtSQL 2.2, we can start working with it.
+   First create a blank php document using your favorite
+   text editor. As I said before, I am currently using TextPad. Save it as 'example.php'.<br><br>
+   To make things less complicated, make sure that you save it in the same
+   directory as where the txtSQL scripts are in.<br><br>
+   Now we must include the php class, so type this in the newly created document
+   <pre>
+   &lt;?php
+   <font color="red">include('./txtSQL.class.php');</font>
+   ?&gt;
+   </pre>
+
+   <center><table width=95%><tr><td>
+   <a name="step3.1"><h4>3.1- Instantiating the class</h4></a>
+   <!----------------------------------------------------------------->
+   In the world of object oriented programming (<b>OOP</B> for short), when classes are instantiated, or a copy of the class is created,
+   a special type of variable called an object is automatically created.<br><br>
+   The object is a pointer to many more variables or objects that are grouped in a special way. For more information on object oriented programming in php,
+   see <a href="http://www.liquidpulse.net/articles/125" target="_blank">http://www.liquidpulse.net/articles/125</a>.<br><br>
+   We need to create an object that points to the txtSQL class and it's variables, so add this to the document
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   <font color=red>$sql = new txtSQL('./data');</font>
+   ?&gt;
+   </pre>
+   The argument, the text enclosed in the single quotes, is the path to the data directory containing all of the databases.<br><br>
+   This folder must contain a folder called 'txtsql' (case-sensative), and inside that folder should be a file called 'txtsql.MYI'. This
+   file contains all of the user/password combinations needed to operate with txtSQL.<br><br>
+   This folder & file come packaged with txtSQL. Once the path is correct, you may move on to the next section.
+
+   <a name="step3.2"><h4>3.2- Connecting to txtSQL</h4></a>
+   <!----------------------------------------------------------------->
+   We must now connect to txtSQL, with a correct username and password combination that will allow us to use txtSQL.<br><br>
+   The default username for txtSQL is 'root', and the default password for it is blank (It is recomendded that you change the password later on).
+   Now, add the following to the text file
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   <font color="red">$sql->connect($username, $password);</font> // default is $sql->connect('root', '');
+   ?&gt;
+   </pre>
+   txtSQL officially recognizes you as one of its users, and will allow you to query databases and table.<br><br>
+   Refer to the documentation for a list of commands you may use
+
+   <a name="step3.3"><h4>3.3- Changing the root password</h4></a>
+   <!----------------------------------------------------------------->
+   If you want to change the root password, which is reccommended, you can do so using the grant_permissions() function.
+   The <a href="docs/16.html" target="functionlist" onclick="document.location.href='#functions'">grant_permission()</a> function call looks like this
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   <font color="red">$sql->grant_permissions($action, $user, $pass [, $newpass]);</font>
+   ?&gt;
+   </pre>
+   where <b>$action</b> can be either <b>add</b>, <b>drop</b>, or <b>edit</b>. The <b>$newpass</b> is only required if you want to edit a user.<br><br>
+   <b>$user</b> is the username we are working with, and <b>$pass</b> is the password for that user.<br><br>
+   For example, if we wanted to change the user 'root's password to 'bar' (assuming that the
+   password is already blank), we would do the following
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   <font color="red">$sql->grant_permissions('edit', 'root', '', 'bar');</font>
+   ?&gt;
+   </pre>
+   <b>OR</b><br><br>
+   to create a new user named 'foo' with password 'bar'
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   <font color="red">$sql->grant_permissions('add', 'foo', 'bar');</font>
+   ?&gt;
+   </pre>
+   <b>OR</b><br><br>
+   to drop a user named 'foo' who has a password 'bar'
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   <font color="red">$sql->grant_permissions('drop', 'foo', 'bar');</font>
+   ?&gt;
+   </pre>
+   <font color="red"><b>NOTE- you __CANNOT__ drop the user 'root'<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- you must supply the correct password for that user inorder to gain access</b></font>
+
+   <a name="step3.4"><h4>3.4- Selecting a database</h4></a>
+   <!----------------------------------------------------------------->
+   Just like mySQL, before doing anything with a table, you must first tell txtSQL which database the table
+   is located in. This step is not crucial, because you can define a database in most queries alone.<br><br>
+   We tell txtSQL what database we are working with by using the following:
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   <font color="red">$sql->selectdb('test');</font> // database 'test' is now selected
+   </pre>
+   </td></tr></table><div align="left">
+
+   <a name="step4"><h3>4- Executing Commands</h3></a>
+   <!----------------------------------------------------------------->
+   In order to, you have to call the respective function through the <b>$sql</b> object.<br><br>
+   An example of 'selecting' data:
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   $sql->selectdb('test'); // database 'test' is now selected
+
+   <font color="red">$results = $sql->select(array(
+           'db'    => 'test', // This line is not necessary, we have already selected a database
+           'table' => 'test',
+           'where' => array('id = 10', 'and', 'name =~ John Smith'),
+           'limit' => array(0, 100)
+           ));</font>
+   ?&gt;
+   </pre>
+
+   <center><table width="95%"><tr><td>
+   <a name="step4.1"><h4>4.1- List of commands</h4></a>
+   <!----------------------------------------------------------------->
+   The list of the more common commands that will work with txtSQL version 2.2 Final are listed below.<br><br>
+   Before you can execute any of these commands
+   you must first be connected, or an error will show. Click the commands for a more detailed explanation on their syntax, followed by a
+   description and an example. <b>See the documentation for a full list of functions</b><br><br>
+
+   <table width="100%" cellspacing="1">
+    <tr valign="top">
+     <td>
+      <li><b><a href="./docs/20.html" target="functionlist" onclick="document.location.href='#functions'">showdbs()</a></b>
+      <li><b><a href="./docs/21.html" target="functionlist" onclick="document.location.href='#functions'">createdb()</a></b>
+      <li><b><a href="./docs/22.html" target="functionlist" onclick="document.location.href='#functions'">dropdb()</a></b>
+      <li><b><a href="./docs/23.html" target="functionlist" onclick="document.location.href='#functions'">renamedb()</a></b>
+     </td>
+
+     <td>
+      <li><b><a href="./docs/24.html" target="functionlist" onclick="document.location.href='#functions'">select()</a></b>
+      <li><b><a href="./docs/25.html" target="functionlist" onclick="document.location.href='#functions'">insert()</a></b>
+      <li><b><a href="./docs/26.html" target="functionlist" onclick="document.location.href='#functions'">update()</a></b>
+      <li><b><a href="./docs/27.html" target="functionlist" onclick="document.location.href='#functions'">delete()</a></b>
+     </td>
+
+     <td>
+      <li><b><a href="./docs/35.html" target="functionlist" onclick="document.location.href='#functions'">showtables()</a></b>
+      <li><b><a href="./docs/36.html" target="functionlist" onclick="document.location.href='#functions'">createtable()</a></b>
+      <li><b><a href="./docs/37.html" target="functionlist" onclick="document.location.href='#functions'">droptable()</a></b>
+      <li><b><a href="./docs/38.html" target="functionlist" onclick="document.location.href='#functions'">altertable()</a></b>
+      <li><b><a href="./docs/39.html" target="functionlist" onclick="document.location.href='#functions'">describe()</a></b>
+     </td>
+    </tr>
+   </table>
+
+   <a name="step4.2"><h4>4.2- Printing results</h4></a>
+   <!----------------------------------------------------------------->
+   The $results variable now contains all of the rows of information inside the table 'test'. Table 'test' was defined as inside database 'test'.<br><br>
+   The only rows returned are the ones which fit the credentials that you give it ( The where clause ).
+
+   You can use a foreach loop in this case to loop through the results
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   $sql->selectdb('test'); // database 'test' is now selected
+
+   $results=
+   $sql->execute('select',
+           array('select' => array('id', 'name'),
+                 'db'     => 'test',
+                 'table'  => 'test',
+                 'where'  => array('id = 10', 'and', 'name =~ John Smith'),
+                 'limit'  => array(0, 100))));
+
+   <font color=red>foreach ( $results as $key => $row )
+   {
+      print "ID: $row[id], NAME: $row[name]&lt;BR&gt;\n";
+   }</font>
+   ?&gt;
+   </pre>
+   </td></tr></table></center>
+
+   <a name="step5"><h3>5- Disconnecting from txtSQL</h3></a>
+   <!----------------------------------------------------------------->
+   At the end of every script should appear the following line to disconnect from txtSQL. It doesn't stop the script from working if it doesn't appear,
+   it's merely present for development purposes.
+   <pre>
+   &lt;?php
+   include('./txtSQL.class.php');
+   $sql = new txtSQL('./data');
+   $sql->connect($username, $password); // default is $sql->connect('root', '');
+   $sql->selectdb('test'); // database 'test' is now selected
+
+   $results=
+   $sql->execute('select',
+           array('select' => array('id', 'name'),
+                 'db'     => 'test',
+                 'table'  => 'test',
+                 'where'  => array('id = 10', 'and', 'name =~ John Smith'),
+                 'limit'  => array(0, 100))));
+
+   foreach ( $results as $key => $row )
+   {
+      print "ID: $row[id], NAME: $row[name]&lt;BR&gt;\n";
+   }
+
+   <font color=red>$sql->disconnect();</font>
+   ?&gt;
+   </pre>
+
+   <a name="step6"><h3>6- Error Handling</h3></a>
+   <!----------------------------------------------------------------->
+   txtSQL comes pre-built with error handling capabilities. They are listed below, click a function for example usage and syntax
+   <p>
+   <li><b><a href="./docs/43.html" target="functionlist" onclick="document.location.href='#functions'">strict()</b>
+   <li><b><a href="./docs/44.html" target="functionlist" onclick="document.location.href='#functions'">get_last_error()</b>
+   <li><b><a href="./docs/45.html" target="functionlist" onclick="document.location.href='#functions'">last_error()</b>
+   <li><b><a href="./docs/46.html" target="functionlist" onclick="document.location.href='#functions'">errordump()</b>
+   </p>
+
+   <a name="functions"><h3>7- Public txtSQL Functions</h3></a>
+   <!----------------------------------------------------------------->
+   <IFRAME scrolling="yes" src="./docs/index.html" style="border:1px solid;border-color:003265;" frameborder="0" height="350" width="100%" name="functionlist"></IFRAME>
+  </td>
+ </tr>
+</table>
+</body>
+</html>

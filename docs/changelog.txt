@@ -1,0 +1,115 @@
+Changelog for txtSQL
+==================================================
+August 2, 2004 ( txtSQL 2.2 Final )
+  - Added function query_count()
+  - Added function last_insert_id()
+  - Removed warning when no values would be given to enter into table
+  - When creating a database or a table, they directories/files are automatically CHMOD'd to 0755
+    so that file permission errors are minimal
+  - txtSQL requires that a column be present at all time in a table. This check was not enforced 
+    when dropping a column (when there was only one left), so now it exists
+  - The 'r_trim' and 'l_trim' functions now work properly
+  - The 'permanent' attribute only comes into effect onyl when changing a value in that column,
+    not the column definition itself
+  - When creating a table, txtSQL now checks for a valid primary key ( that it is an integer and is
+    auto_increment )
+  - When dropping a database and it was locked, txtSQL would drop it anyway; this is not fixed
+  - Added two new functions, db_exists() and table_exists()
+  - Added the 'DISTINCT' feature, where you can specify a column that should be checked for duplicates
+  - When using the '?' operator in the where clause and not specifying a search value, txtSQL now
+    issues an error, and returns FALSE
+  - Bug 967606: Integer fields would not be properly quoted in some cases internally
+  - When deleting, and no 'where clause' is specified, all rows are deleted simultaneously, rather
+    than the one by one method
+
+May 23, 2004 (txtSQL 2.2.2 RC2)
+  - Updated the readme with a more comprehensive one
+  - Added new 'shortcut' methods for the regular sql functions (select, insert, update, delete
+    create table, etc.)
+  - Fixed sorting problem in txtSQLAdmin, used to display only the first page sorted
+  - Added the emptyCache() function to allow user to empty out the txtSQL file cache
+  - Updated the readFile, and made use of caching to enhance execution time of script
+  - Added functionality to a small set of functions for defining a where clause
+  - Updated txtSQLAdmin to include the new function support when searching for values
+  - Added xor logical operator to check if ONLY one of two statements evaluate to TRUE
+  - Added the '?' relational operator ('instring' operator), which checks to see if a field
+    contains a string
+  - Added function getUsers() to retrieve the currently registered txtSQL users
+  - When instantiating txtSQL class, it checks for a valid directory now
+
+April 19, 2004 (txtSQL 2.2.1 RC1) 
+  - Added a new field type, date
+  - Updated txtSQLAdmin to include the date field type
+  - In txtSQLAdmin, when editing a row with field enum, a select box is now shown instead of textbox
+  - txtSQL now comes with another example script, smNews
+  - Added functionality to add/edit users, and also to change your password
+  - Fixed grant_permissions() error where a blank password would not be saved correctly
+  - Updated the readme, also fixed some typos
+  - added TXTSQL_CORE_PATH constant to eliminate need for full paths
+
+March 20, 2004 (txtSQL 2.2.0 Beta)
+  - Added ENUM field type explanation to the documentation with some examples
+  - Bug 917895: Files were imploded with a " " when they were read, now fixed
+  - Added a new data type, ENUM, which is basically a list of values the field may have
+  - txtSQLAdmin now supports the enum field type
+  - txtSQLAdmin now supports the adding and dropping of primary keys
+  - txtSQLAdmin now supports the ability to add database locks
+  - If a primary key is set, and then the column is set to another field type then integer, it will
+    not be a primary key anymore
+  - You can modify a column definitions even if the field is permanent now. Permanent disallows the
+    modification of that row's column if the field is set to permanent however
+  - Added file locks to increase security when using file pointers in php
+  - Added functionality to lock, and unlock a database
+  - Insert, Update, Delete, Create Table, Alter Table, Drop Table, Drop Database, and Rename Database
+    all now require that the database be unlocked in order to function
+  - Added new function to check whether a database is currently locked 
+  - The operation 'describe' now shows the list of values from the enum
+  - In operation 'Alter table', when action was to insert column, the max-value was defaulted to 2,
+    it is now set to 0 (infinite)
+
+February 24, 2004 (txtSQL 2.1.0 Beta)
+  - Bug 905665: The create_tbl.php error that occurred when creating a table has been fixed
+  - Modified the searching algorithm to increase execution speed, which resulted in a drop of
+    a few tenths of a second per query (rougly 134% increase in speed)
+  - In the update(), the limit was defaulted to one less than the number of records in the table;
+    This is wrong, it is now set to the number of records in the table
+  - Spelling fixes in update() and insert() when a maximum value for a column is exceeded
+  - When checking that the fields maximum value is not exceeded, txtSQL now checks for an integer's
+    value instead of the string length when inserting/updating
+  - When inserting/selecting/updating rows with a "'" present in the string, it didnt addedslashes()
+    properly; This is now fixed
+  - tbl_edit.php now supports the update for the bug above this line.
+
+February 20, 2004 (txtSQL 2.0.5 Beta)
+  - Fixed bug when inserting a row of data
+
+February 16, 2004 (txtSQL 2.0.4 Beta)
+  - Found and fixed a bug where selecting from columns with numbers as names, would return only
+    the last column of data
+  - Added ability to add a column to the beggining of a column set in a table (Also updated
+    txtSQLAdmin with this ability)
+  - Removed fileread function as it caused problems (Still exists for backwards compatibility)
+  - txtSQL.core.php now has been updated to make use of doc-style comments
+  - Fixed problem with _buildIf() where it would search for incorrect values
+  - Fixed showtables to list only valid tables
+  - Updated the documentation with a more comprehensive and detailed Docs. Also updated the
+    readme.html file with a better look, and a better explanation on how to get started.
+  - The txtSQL package now includes the GPL license.
+
+February 13, 2004 (txtSQL 2.0.3 Beta)
+  - Fixed two bugs in the insert action, and also updated the txtSQLAdmin with the new txtSQL
+    files. Updated files are also in the txtSQL CVS. I also added the ability to add a column
+    after another column
+
+February 6, 2004 (txtSQL 2.0.2 Beta)
+  - Found a bug in the _isconnected() function which would not allow users with an empty password
+    to login
+  - Fixed the txtsql.MYI file because of it's invalidness. Was replaced in all releases.
+
+February 5, 2004 (txtSQL 2.0.1 Beta)
+  - Fixed small bug in the _buildIf() function, it would bomb if any quotation marks were used
+    in an equality statement
+
+January 28, 2004 (txtSQL 2.0.0 Beta)
+  - Started the changelog, deprecated the whole txtSQL 1.0 for unstability, and un-efficiency.
+  - Released txtSQL 2.0 Beta for testing purposes only

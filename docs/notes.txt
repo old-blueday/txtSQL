@@ -1,0 +1,21 @@
+txtSQL Notes
+===================================================================================================
+- If any errors occur, try CHMOD'ing the table files and its database folder to 0755 or higher
+
+- If you forget you password, do the following; Delete the folder 'txtsql' inside of your data folder
+  and install a fresh version of that folder from the zip file that can be downloaded on
+  http://txtSQL.sf.net
+
+- txtSQL often releases small bug fixes and updates, make sure you are keeping up-to-date with these
+  releases, so that your script may function as intended.
+
+- Before running txtSQLAdmin, make sure you edit your config.php file.
+
+- Before running smNews, make sure that you read the readme
+
+- When txtSQL.class.php is included in a php script and the txtSQL.core.php file is not in the same
+  directory, then you must define a constant named 'TXTSQL_CORE_PATH' with the value of where the
+  txtSQL.core.php file is located (no trailing slash). Either that, or you can change the relative
+  path inside txtSQL.class.php to the full path of where txtSQL.core.php is located.
+
+- get support at http://txtsql.sourceforge.net

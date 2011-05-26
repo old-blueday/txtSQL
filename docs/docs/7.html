@@ -1,0 +1,322 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Docs : Functions</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>Functions</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<b><a href="1.html">'Language Reference'</a></b><br />
+			<li><a href="2.html">Logical Operators</a></li><br />
+			<li><a href="3.html">Relational Operators</a></li><br />
+			<li><a href="4.html">Data Types</a></li><br />
+			<li><a href="5.html">Column Types</a></li><br />
+			<li><a href="6.html">Primary Keys</a></li><br />
+			<li><b>Functions</b></li><br />
+			<li><a href="8.html">Where Clauses</a></li><br />
+			<li><a href="9.html">LIKE Clauses</a></li><br />
+			<li><a href="10.html">Limit Clauses</a></li><br />
+			<li><a href="11.html">OrderBy Clauses</a></li><br />
+			<li><a href="12.html">Notes</a></li><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<a href="19.html">Database Functions</a><br />
+			<br />
+
+			<a href="28.html">Data Manipulation Functions</a><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="6.html">Last Section ( Primary Keys )</a></td>
+					<td align="center" width="33%"><font size="6">Functions</font></td>
+					<td align="right" width="33%"><a href="8.html">Next Section ( Where Clauses )</a> >></td>
+				</tr>
+			</table>
+
+			<hr size="1" color="#BBBBBB">
+
+			These functions can be used in constructing <a href="8.html">where clauses</a>. They are only available
+			where txtSQL >= 2.2.2 RC2. Valid functions are listed below<br><br>
+			
+			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+			    <tr bgcolor="fafafa" align="center">
+			        <td><b>Function</b></td>
+			        <td><b>Example</b></td>
+			        <td><b>Description</b></td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>strUpper()</td>
+			        <td>array('strUpper($a) = $b')</td>
+			        <td>Converts $a to uppercase</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>strLower()</td>
+			        <td>array('strLower($a) = $b')</td>
+			        <td>Converts $a to lowercase</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>chop()</td>
+			        <td>array('chop($a) = $b')</td>
+			        <td>Strip whitespace from the end of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>rtrim()</td>
+			        <td>array('rtrim($a) = $b')</td>
+			        <td>Strip whitespace from the end of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>ltrim()</td>
+			        <td>array('ltrim($a) = $b')</td>
+			        <td>Strip whitespace from the beginning of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>trim()</td>
+			        <td>array('trim($a) = $b')</td>
+			        <td>Strip whitespace from the beginning and end of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>md5()</td>
+			        <td>array('md5($a) = $b')</td>
+			        <td>Calculates the md5 hash of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>stripSlash()</td>
+			        <td>array('stripSlash($a) = $b')</td>
+			        <td>Un-quote string quoted with addslashes </td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>strLength()</td>
+			        <td>array('stripSlash($a) = $b')</td>
+			        <td>Calculates the length of $a</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>strReverse()</td>
+			        <td>array('strReverse($a) = $b')</td>
+			        <td>Reverses $a</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>ucFirst()</td>
+			        <td>array('ucFirst($a) = $b')</td>
+			        <td>Makes $a's first character uppercase</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>ucwords()</td>
+			        <td>array('ucWords($a) = $b')</td>
+			        <td>Uppercase the first character of each word in a $a</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>bin2hex()</td>
+			        <td>array('bin2hex($a) = $b')</td>
+			        <td>Convert binary data into hexadecimal representation</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>entDecode()</td>
+			        <td>array('entDecode($a) = $b')</td>
+			        <td>Convert all HTML entities to their applicable characters</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>entEncode()</td>
+			        <td>array('entEncode($a) = $b')</td>
+			        <td>Convert all applicable characters to HTML entities</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>soundex()</td>
+			        <td>array('soundex($a) = $b')</td>
+			        <td>Calculate the soundex key of a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>ceil()</td>
+			        <td>array('ceil($a) = $b')</td>
+			        <td>Round fractions up</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>floor()</td>
+			        <td>array('floor($a) = $b')</td>
+			        <td>Round fractions down</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>round()</td>
+			        <td>array('round($a) = $b')</td>
+			        <td>Rounds a float</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>isNumeric()*</td>
+			        <td>array('isNumeric($a)')</td>
+			        <td>Finds whether a variable is a number or a numeric string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>isString()*</td>
+			        <td>array('isString($a)')</td>
+			        <td>Finds whether a variable is a string</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>isFile()*</td>
+			        <td>array('isFile($a)')</td>
+			        <td>Tells whether the filename is a regular file</td>
+			    </tr>
+			
+			    <tr bgcolor="fefefe">
+			        <td>isDir()*</td>
+			        <td>array('isDir($a)')</td>
+			        <td>Tells whether the filename is a directory</td>
+			    </tr>
+			</table>
+			*- These functions can be negated by placing a '!' in front of the function name.
+			For example, array('!isdir($a)'). Also these functions can __NOT__ have an operator
+			in it, they are 'unary functions'.
+
+		<br /><br />			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>Functions</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('7');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td bgcolor="#E0E0E0" colspan="2">
+						<b>Faraz Ali</b> <font size="1">&lt;SaiyanM at hotmail dot com&gt;<br />
+						July 30, 2004, 11:19 pm</font>
+						<table width="100%" cellspacing="0" cellpadding="3">
+							<tr>
+								<td bgcolor="#F0F0F0">
+									<font face="courier new" size="3"><code><font color="#000000">
+You can only use these functions on a column, for example<br /><font color="#0000BB">&lt;?php<br />$sql</font><font color="#007700">-&gt;</font><font color="#0000BB">select</font><font color="#007700">(array(<br />
+<b>Warning</b>:  Unexpected character in input:  '\' (ASCII=92) state=1 in <b>c:\program files\other\easyphp\www\txtsql\documents\index.php</b> on line <b>549</b><br />
+'</font><font color="#0000BB">where</font><font color="#007700">\'</font><font color="#0000BB"> =&gt; array(</font><font color="#007700">\'</font><font color="#0000BB">strLower(name) = john doe</font><font color="#007700">\'</font><font color="#0000BB">) // correct<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// </font><font color="#007700">\'</font><font color="#0000BB">name = strLower(john doe) is incorrect,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// will produce unwanted results<br />...));<br />?&gt;</font>
+</font>
+</code></font>								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

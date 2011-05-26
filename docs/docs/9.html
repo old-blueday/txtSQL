@@ -1,0 +1,167 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Docs : LIKE Clauses</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>LIKE Clauses</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<b><a href="1.html">'Language Reference'</a></b><br />
+			<li><a href="2.html">Logical Operators</a></li><br />
+			<li><a href="3.html">Relational Operators</a></li><br />
+			<li><a href="4.html">Data Types</a></li><br />
+			<li><a href="5.html">Column Types</a></li><br />
+			<li><a href="6.html">Primary Keys</a></li><br />
+			<li><a href="7.html">Functions</a></li><br />
+			<li><a href="8.html">Where Clauses</a></li><br />
+			<li><b>LIKE Clauses</b></li><br />
+			<li><a href="10.html">Limit Clauses</a></li><br />
+			<li><a href="11.html">OrderBy Clauses</a></li><br />
+			<li><a href="12.html">Notes</a></li><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<a href="19.html">Database Functions</a><br />
+			<br />
+
+			<a href="28.html">Data Manipulation Functions</a><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="8.html">Last Section ( Where Clauses )</a></td>
+					<td align="center" width="33%"><font size="6">LIKE Clauses</font></td>
+					<td align="right" width="33%"><a href="10.html">Next Section ( Limit Clauses )</a> >></td>
+				</tr>
+			</table>
+
+			<hr size="1" color="#BBBBBB">
+
+			LIKE clauses belong in an array and are in the following format.<br /><br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('$column [!~|=~] $pattern')<br /><br />
+			where $column is the column name, and $pattern is a simplified regex pattern. The regex pattern can contain
+			the following items<br /><br />
+			
+			<li>'$' - end of string
+			<li>'^' - begginning of string
+			<li>'[$a|$b|$c...]' - matches either $a, or $b, or $c and so on
+			<li>'[^$a|$b|$c...]' - matches NOT either $a, or $b, or $c and so on
+			<li>'%' - Wildcard, meaning it matches anything
+
+		<br /><br />			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>LIKE Clauses</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('9');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center" bgcolor="#EBEBEB"><font face="courier new" size="2">No comments found; </font></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

@@ -1,0 +1,886 @@
+<title>txtSQL 2.2 Final Documentation</title>
+<style>
+a{color: darkblue; text-decoration:none;}
+td,body{font-family: Arial; font-size: 11px}
+</style>
+<script>
+function printPage()
+{
+	document.getElementById('content').style.overflow = 'visible';
+	document.getElementById('content1').style.overflow = 'visible';
+	document.getElementById('printBtn').style.visibility = 'hidden';
+	window.print();
+}
+</script>
+
+<input id="printBtn" type="button" onclick="printPage();" value="Print Page"><table cellpadding="5">
+<tr valign="top">
+<td>
+<b>Contents</b>
+<div id="content" style="height: 350; width: 150; overflow: auto">
+
+<li><a href="#5">Column Types</a>
+<li><a href="#4">Data Types</a>
+<li><a href="#7">Functions</a>
+<li><a href="#9">LIKE Clauses</a>
+<li><a href="#10">Limit Clauses</a>
+<li><a href="#2">Logical Operators</a>
+<li><a href="#12">Notes</a>
+<li><a href="#11">OrderBy Clauses</a>
+<li><a href="#6">Primary Keys</a>
+<li><a href="#3">Relational Operators</a>
+<li><a href="#8">Where Clauses</a>
+<li><a href="#38">altertable()</a>
+<li><a href="#14">connect()</a>
+<li><a href="#21">createdb()</a>
+<li><a href="#36">createtable()</a>
+<li><a href="#48">db_exists()</a>
+<li><a href="#32">delete()</a>
+<li><a href="#39">describe()</a>
+<li><a href="#15">disconnect()</a>
+<li><a href="#22">dropdb()</a>
+<li><a href="#37">droptable()</a>
+<li><a href="#41">empty_cache()</a>
+<li><a href="#46">error_dump()</a>
+<li><a href="#33">execute()</a>
+<li><a href="#17">getUsers()</a>
+<li><a href="#44">get_last_error()</a>
+<li><a href="#16">grant_permissions()</a>
+<li><a href="#30">insert()</a>
+<li><a href="#24">isLocked()</a>
+<li><a href="#45">last_error()</a>
+<li><a href="#51">last_insert_id()</a>
+<li><a href="#25">lockdb()</a>
+<li><a href="#50">query_count()</a>
+<li><a href="#23">renamedb()</a>
+<li><a href="#29">select()</a>
+<li><a href="#27">selectdb()</a>
+<li><a href="#20">showdbs()</a>
+<li><a href="#35">showtables()</a>
+<li><a href="#43">strict()</a>
+<li><a href="#40">table_count()</a>
+<li><a href="#49">table_exists()</a>
+<li><a href="#26">unlockdb()</a>
+<li><a href="#31">update()</a>
+<li><a href="#18">version()</a>
+</div></td>
+<td><div id="content1" style="height: 350; width: 100%; overflow: auto;">
+
+<a name="5"></a>
+<h3><font color="firebrick">Column Types</font></h3>
+When creating a table, there are multiple column types that you can choose from to customize that
+column. They can be any one of the following or more.<br /><br />
+
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+    <tr bgcolor="fafafa" align="center">
+        <td><b>Name</b></td>
+        <td><b>Example</b></td>
+        <td><b>Description</b></td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>auto_increment</td>
+        <td>array('auto_increment' => [0|1])</td>
+        <td>This columns increments itself automatically when inserting. This column must be of type
+            'int'.</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>max</td>
+        <td>array('max' => $maxLength)</td>
+        <td>This column type limits the length of the field to $maxLength. If the column is of type
+            integer, then the value will be checked against rather than the length</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>permanent</td>
+        <td>array('permanent' => [0|1])</td>
+        <td>This column type, when set to 1, does not allow it to be editable until set to 1 again</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>type</td>
+        <td>array('type' => [string|text|int|bool|date|enum])</td>
+        <td>see the <a href="#4">data types</a> section</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>enum_val</td>
+        <td>array('enum_val' => array([$values]...))</td>
+        <td>This column type is only required when the column's type is set to enum. This is the list of
+            possible values in the column. The default value is always the trailing value. If the value
+            doesn't match any one of the enum_val's, then it will be replaced with the default value.</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>default</td>
+        <td>array('default' => $defaultValue)</td>
+        <td>This type allows txtSQL to know what the default value for a column is. txtSQL will use this value only when there
+            is no value for a column given to insert</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>primary</td>
+        <td>array('primary' => [0|1])</td>
+        <td>Tells txtSQL that this column is the primary column, when set to 1. There can only be one per table, and it must be
+            of type 'int' and has to be 'auto_increment'</td>
+    </tr>
+</table>
+<br /><br />
+
+<a name="4"></a>
+<h3><font color="firebrick">Data Types</font></h3>
+When a column is created or altered, a <a href="#5">column type</a> can be given. One of the column types is 'type'.
+'type' can be any one of the following.<br /><br />
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+    <tr bgcolor="fafafa" align="center">
+        <td><b>Name</b></td>
+        <td><b>Description</b></td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'string'</td>
+        <td>Contains one line of text, which can contain anything</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'text'</td>
+        <td>Multiple lines of text, which can contain anything</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'int'</td>
+        <td>An integer ranging within the limit provided by the user</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'bool'</td>
+        <td>A boolean TRUE or FALSE</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'enum'</td>
+        <td>A list of possible values a field can have. An 'enum' column must be provided with
+            'enum_values', which is an array in the format of <i>array([$possibleValue]...)</i>. The default
+            value is always the trailing value. If the value doesn't match any one of the enum_val's, then
+            it will be replaced with the default value.</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>'date'</td>
+        <td>A 10 digit integer representing the UNIX timestamp of when the record was created</td>
+    </tr>
+</table>
+<b>Note</b>- The default data type is 'string'
+<br /><br />
+
+<a name="7"></a>
+<h3><font color="firebrick">Functions</font></h3>
+These functions can be used in constructing <a href="#8">where clauses</a>. They are only available
+where txtSQL >= 2.2.2 RC2. Valid functions are listed below<br><br>
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+    <tr bgcolor="fafafa" align="center">
+        <td><b>Function</b></td>
+        <td><b>Example</b></td>
+        <td><b>Description</b></td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>strUpper()</td>
+        <td>array('strUpper($a) = $b')</td>
+        <td>Converts $a to uppercase</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>strLower()</td>
+        <td>array('strLower($a) = $b')</td>
+        <td>Converts $a to lowercase</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>chop()</td>
+        <td>array('chop($a) = $b')</td>
+        <td>Strip whitespace from the end of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>rtrim()</td>
+        <td>array('rtrim($a) = $b')</td>
+        <td>Strip whitespace from the end of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>ltrim()</td>
+        <td>array('ltrim($a) = $b')</td>
+        <td>Strip whitespace from the beginning of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>trim()</td>
+        <td>array('trim($a) = $b')</td>
+        <td>Strip whitespace from the beginning and end of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>md5()</td>
+        <td>array('md5($a) = $b')</td>
+        <td>Calculates the md5 hash of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>stripSlash()</td>
+        <td>array('stripSlash($a) = $b')</td>
+        <td>Un-quote string quoted with addslashes </td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>strLength()</td>
+        <td>array('stripSlash($a) = $b')</td>
+        <td>Calculates the length of $a</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>strReverse()</td>
+        <td>array('strReverse($a) = $b')</td>
+        <td>Reverses $a</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>ucFirst()</td>
+        <td>array('ucFirst($a) = $b')</td>
+        <td>Makes $a's first character uppercase</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>ucwords()</td>
+        <td>array('ucWords($a) = $b')</td>
+        <td>Uppercase the first character of each word in a $a</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>bin2hex()</td>
+        <td>array('bin2hex($a) = $b')</td>
+        <td>Convert binary data into hexadecimal representation</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>entDecode()</td>
+        <td>array('entDecode($a) = $b')</td>
+        <td>Convert all HTML entities to their applicable characters</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>entEncode()</td>
+        <td>array('entEncode($a) = $b')</td>
+        <td>Convert all applicable characters to HTML entities</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>soundex()</td>
+        <td>array('soundex($a) = $b')</td>
+        <td>Calculate the soundex key of a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>ceil()</td>
+        <td>array('ceil($a) = $b')</td>
+        <td>Round fractions up</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>floor()</td>
+        <td>array('floor($a) = $b')</td>
+        <td>Round fractions down</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>round()</td>
+        <td>array('round($a) = $b')</td>
+        <td>Rounds a float</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>isNumeric()*</td>
+        <td>array('isNumeric($a)')</td>
+        <td>Finds whether a variable is a number or a numeric string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>isString()*</td>
+        <td>array('isString($a)')</td>
+        <td>Finds whether a variable is a string</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>isFile()*</td>
+        <td>array('isFile($a)')</td>
+        <td>Tells whether the filename is a regular file</td>
+    </tr>
+
+    <tr bgcolor="fefefe">
+        <td>isDir()*</td>
+        <td>array('isDir($a)')</td>
+        <td>Tells whether the filename is a directory</td>
+    </tr>
+</table>
+*- These functions can be negated by placing a '!' in front of the function name.
+For example, array('!isdir($a)'). Also these functions can __NOT__ have an operator
+in it, they are 'unary functions'.
+<br /><br />
+
+<a name="9"></a>
+<h3><font color="firebrick">LIKE Clauses</font></h3>
+LIKE clauses belong in an array and are in the following format.<br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('$column [!~|=~] $pattern')<br /><br />
+where $column is the column name, and $pattern is a simplified regex pattern. The regex pattern can contain
+the following items<br /><br />
+
+<li>'$' - end of string
+<li>'^' - begginning of string
+<li>'[$a|$b|$c...]' - matches either $a, or $b, or $c and so on
+<li>'[^$a|$b|$c...]' - matches NOT either $a, or $b, or $c and so on
+<li>'%' - Wildcard, meaning it matches anything
+<br /><br />
+
+<a name="10"></a>
+<h3><font color="firebrick">Limit Clauses</font></h3>
+Limit clauses can be used to specify the begginning offset and ending offset for a search in
+<a href="#29">select()</a>,
+<a href="#31">update()</a>, and
+<a href="#32">delete()</a>.
+But make <b>note</b> that in delete(), only the begginning offset is taken into account. A limit clause
+is an array in the following format<br><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array($startOffset, $endOffset)<br /><br />
+<br /><br />
+
+<a name="2"></a>
+<h3><font color="firebrick">Logical Operators</font></h3>
+These operators can be used in joining two seperate <a href="#8">where clauses</a>, $a and $b<br /><br />
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+    <tr bgcolor="fafafa" align="center">
+        <td><b>Example</b></td>
+        <td><b>Name</b></td>
+        <td><b>Result</b></td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a', 'and', '$b')</td>
+        <td>AND</td>
+        <td>TRUE if both $a and $b are TRUE</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a', 'or', '$b')</td>
+        <td>OR</td>
+        <td>TRUE if either $a or $b is TRUE</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a', 'xor', '$b')</td>
+        <td>XOR</td>
+        <td>TRUE if either $a or $b is TRUE, but not both.</td>
+    </tr>
+</table>
+<br /><br />
+
+<a name="12"></a>
+<a name="11"></a>
+<h3><font color="firebrick">OrderBy Clauses</font></h3>
+'Order By' clauses can be used in <a href="#29">select()</a>. It will sort the results
+that are found by select() by the specified $column, either ASCENDING or DESCENDING. An 'Order By'
+clause is an array in the following format<br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array($column, [ASC|DESC])<br><br>
+where $column is the column to sort the results by. If the $column is not in the result set, then
+txtSQL will issue an error.
+<br /><br />
+
+<a name="6"></a>
+<h3><font color="firebrick">Primary Keys</font></h3>
+txtSQL has been designed to allow the use of primary keys. There are two ways to add them, and only one
+way to drop them.<br /><br />
+
+To add primary keys when creating a table, specify the <a href="#5">column type</a> 'primary' and set it
+equal to 1. The column must be 'int' (integer) and 'auto_increment'.<br />
+The other way to add a primary key is to use the <a href="#38">altertable()</a> function.<br /><br />
+
+If you want to drop a primary key, you must also use the <a href="#38#dropkey">altertable()</a> function.<br /><br />
+<br /><br />
+
+<a name="3"></a>
+<h3><font color="firebrick">Relational Operators</font></h3>
+These operators can be used in constructing a <a href="#8">where clause</a><br /><br />
+
+<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="BBBBBB">
+    <tr bgcolor="fafafa" align="center">
+        <td><b>Example</b></td>
+        <td><b>Name</b></td>
+        <td><b>Result</b></td>
+    </tr>
+
+     <tr bgcolor="fbfbfb">
+        <td>array('$a = $b')</td>
+        <td>equal to</td>
+        <td>TRUE if $a is equal to $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a != $b')</td>
+        <td>not equal to</td>
+        <td>TRUE if $a is not equal to $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a <> $b')</td>
+        <td>not equal to</td>
+        <td>TRUE if $a is not equal to $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a &lt; $b')</td>
+        <td>less than</td>
+        <td>TRUE if $a is less than $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a &lt;= '$b')</td>
+        <td>less than or equal to</td>
+        <td>TRUE if $a is less than or equal to $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a &gt; $b')</td>
+        <td>greater than</td>
+        <td>TRUE if $a is greater than $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a &gt;= $b')</td>
+        <td>greater than or equal to</td>
+        <td>TRUE if $a is greater than or equal to $b</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a =~ $b')</td>
+        <td>like</td>
+        <td>TRUE if $a matches the pattern $b. Also see: <a href="#9">LIKE clauses</a></td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a !~ $b')</td>
+        <td>not like</td>
+        <td>TRUE if $a does _NOT_ match the pattern $b. </td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a ? $b')</td>
+        <td>instring (txtSQL >= 2.2.2 RC2)</td>
+        <td>TRUE if $b is in $a</td>
+    </tr>
+
+    <tr bgcolor="fbfbfb">
+        <td>array('$a !? $b')</td>
+        <td>not instring (txtSQL >= 2.2.2 RC2)</td>
+        <td>TRUE if $b is NOT in $a</td>
+    </tr>
+</table>
+<br /><br />
+
+<a name="8"></a>
+<h3><font color="firebrick">Where Clauses</font></h3>
+A where clause tells txtSQL what rows that you are looking for. Where clauses can be used in
+<a href="#29">select()</a>,
+<a href="#32">delete()</a> and
+<a href="#31">update</a>.
+A where clause is simply an array in the following format.<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array(['$column $op $value' [, $logicalOp]]...);<br><br>
+where $column is the name of the column, $op is the operator to use, and $value is the value to check against.
+For more information on operators, see the <a href="#3">relational operators</a> section. For
+more information on logical operators, see the <a href="#2">logical operators</a> section.<br><br>
+<br /><br />
+
+<a name="38"></a>
+<h3><font color="red">altertable()</font>
+<h4>(void altertable ( array ('table' => $table, 'action' => $action, 'name' => $column, 'values' => $values [, 'after' => $afterColumn [, 'db' => $db]]) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will alter a txtSQL-<i>$table</i>'s column defintions. It will only work with the specified column, which is <i>$column</i>. The <i>$action</i> can be either<br /><br />
+
+<div align="right">
+<table width="95%" cellspacing="0" cellpadding="0" border="0">
+	<tr>
+		<td>
+			<li><b>insert</b>- Inserts a new column, <i>$column</i>, and if specified, after the column <i>$afterColumn</i>
+			<br /><br />
+
+			<li><b>modify</b>- Modifies an existing <i>$column</i>
+			<br /><br />
+
+			<li><b>drop</b>- Drops an existing <i>$column</i>
+			<br /><br />
+
+			<li><b>rename col</b>- Renames a <i>$column</i>. Expects <i>array('name' => $newcolname)</i> in the <i>$values</i>
+			<br /><br />
+
+			<li><b>rename table</b>- Renames a <i>$table</i>. Expects <i>array('name' => $newTableName)</i> in the <i>$values</i>
+			<br /><br />
+
+			<a name="addkey"></a>
+			<li><b>addkey</b>- Sets <i>$column</i> as the primary key ( must be integer and auto_increment ). Expects <i>array('name' => $colName)</i> in the <i>$values</i>
+			<br /><br />
+
+			<a name="dropkey"></a>
+			<li><b>dropkey</b>- Does opposite of 'addkey'
+			<br /><br />
+		</td>
+	</tr>
+</table>
+</div>
+
+The <i>$values</i> element is an array containing information about the column, it must be in the following format<br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>array( [$colType => $value]... )</i> unless otherwise noted above<br /><br />
+
+<hr size="1">
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- For more information on data types, see the <i><a href="#4">data types</a></i> section, or for more information the column types,
+see the <i><a href="#5">column types</a></i> section<br />
+<b>Note</b>- If <i>$tablename</i> does not already exists, txtSQL will issue an error<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="14"></a>
+<h3><font color="red">connect()</font>
+<h4>(bool connect ( $user, $pass ))</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+This function connects you to the txtSQL service as <i>$user</i>. If the user does not exist, or the password is incorrect, then this function will return <i>false</i>. It also issues an error warning, which can be surpressed using <i><a href="#43">strict(0)</a></i>.
+Once connected, you can disconnect using <i><a href="#15">disconnect()</a></i>
+<br /><br />
+
+<a name="21"></a>
+<h3><font color="red">createdb()</font>
+<h4>(void createdb ( array( 'db' => $db ) ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function will create a new database inside of the current working directory, as long as it does not already exists.
+<br /><br />
+<b>Note</b>- This function will return <i>false</i> if the database already exists<br>
+<b>Caveat</b>- In windows, filenames are not case-sensative, so 'DBNAME' is the same as 'dbname', which is why it will issue an error if you try to create a database 'test', when 'TEST' exists.
+<br /><br />
+
+<a name="36"></a>
+<h3><font color="red">createtable()</font>
+<h4>(void createtable ( array ('table' => $tablename, 'columns' => $columns [, 'db' => $db]) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will create a txtSQL table with the name <i>$tablename</i>, as long as it does not already exist. The columns that will be in this table will be defined in <i>$columns</i> part of the array. <i>$columns</i> must be an array in the following format<br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>array([$columnName => array([$coltype => $value]...)]... )</i>
+<br /><br />
+For more information on on column types, see the <i><a href="#5">column types</a></i> section<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- If <i>$tablename</i> already exists, txtSQL will issue an error<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="48"></a>
+<h3><font color="red">db_exists()</font>
+<h4>(bool db_exists ( $database ))</h4>
+<h5>txtSQL >= 2.2 Final</h5></h3>
+This function will return <i>TRUE</i> if the <i>$database</i> exists, and <i>FALSE</i> if it does not
+<br /><br />
+
+<a name="32"></a>
+<h3><font color="red">delete()</font>
+<h4>(int delete ( array( 'table' => $table, $where => $where, [, 'limit' => $limit [, 'db' => $db]] ) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will delete any rows that fit the <i>$where</i> clause, and returns the number of rows deleted from the table.
+This function will only delete rows as long as they are within the <i>$limit</i>. If no <i>$limit</i> is defined, then all rows that match will be deleted.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- For more information on defining a where clause, see the <i><a href="#8">how to create a where clause</a></i> section, or for defining a limit clause, see <i>
+<a href="#10">how to create a limit clause</i></a> section<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="39"></a>
+<h3><font color="red">describe()</font>
+<h4>(mixed describe ( array ('table' => $table [, 'db' => $db]) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will return information about a txtSQL <i>$table</i>. It will return information such as column type, permanent, maximum length etc., and will also return the enum values if the column is set to type 'enum'.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br>
+<b>Note</b>- For more information on data types, see the <i><a href="#4">data types</a></i> section, or for more information the column types, see the <i>
+<a href="#5">column types</a></i> section<br>
+<b>Note</b>- If <i>$tablename</i> does not already exists, txtSQL will issue an error<br>
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="15"></a>
+<h3><font color="red">disconnect()</font>
+<h4>(bool disconnect ( ))</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+ This function allows for a <i>connected</i> user to disconnect from the txtSQL service. Although this is not mandatory, it exists for
+      development purposes. If a user is not connected, it will return <i>false</i>, and issue a warning, which may be surpessed using
+      <i><a href="#43">strict(0)</a></i>.<br><br>
+      <b>Note</b>- This function will return <i>false</i> if not already connected
+<br /><br />
+
+<a name="22"></a>
+<h3><font color="red">dropdb()</font>
+<h4>(void dropdb ( array( 'db' => $db ) ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function will <i>PERMANENTLY</i> drop a database ( so that means no undo-ing ), as long as it exists
+      <br /><br />
+      <b>Note</b>- This function will return <i>false</i> if the database doesn't already exists, or if the database specified is 'txtsql'
+<br /><br />
+
+<a name="37"></a>
+<h3><font color="red">droptable()</font>
+<h4>(void droptable ( array ('table' => $table [, 'db' => $db]) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will drop a txtSQL <i>$table</i> from a <i>$db</i>. If no database is specified, then txtSQL will delete the table from the selected database<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- If <i>$tablename</i> does not already exists, txtSQL will issue an error<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="41"></a>
+<h3><font color="red">empty_cache()</font>
+<h4>(void empty_cache ())</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+When txtSQL first reads a table, it reads it and saves it to memory, because large tables consume time to read and parse. If you want to empty the cache (which only exists during run-time), use this function to erase it.
+<br /><br />
+
+<a name="46"></a>
+<h3><font color="red">error_dump()</font>
+<h4>(void error_dump())</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+This function will print any and all error messagees that txtSQL issued during runtime.
+<br /><br />
+
+<a name="33"></a>
+<h3><font color="red">execute()</font>
+<h4>(mixed execute ( $action [, $args] ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function will execute a valid txtSQL command and return that function's results. The list of valid <i>$action</i>'s are
+<a href="#29">'select'</a>,
+<a href="#30">'insert'</a>,
+<a href="#31">'update'</a>,
+<a href="#32">'delete'</a>,
+<a href="#20">'show databases'</a>,
+<a href="#21">'create database'</a>,
+<a href="#22">'drop database'</a>,
+<a href="#23">'rename database'</a>,
+<a href="#35">'show tables'</a>,
+<a href="#36">'create table'</a>,
+<a href="#37">'drop table'</a>,
+<a href="#38">'alter table'</a>,
+and <a href="#39">'describe'</a>.<br /><br />
+The <i>$args</i> is the same arguments as if you were using the function seperately. Click a function for more information on what is to be defined in the <i>$args</i><br /><br />
+
+<b>Note</b>- For more information on defining a where clause, see the <i><a href="#8">how to create a where clause</a></i> section, or for defining a limit clause, see
+<i><a href="#8">how to create a limit clause</i></a> section<br>
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="17"></a>
+<h3><font color="red">getUsers()</font>
+<h4>(mixed getUsers ())</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function returns an array filled with a list of currently registered txtSQL users.
+<br /><br />
+
+<a name="44"></a>
+<h3><font color="red">get_last_error()</font>
+<h4>(string get_last_error())</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+This function will retrieve the last error message that txtSQL issued<br /><br />
+<b>Note</b>- To print the last warning rather than retrieving it, use <i><a href="#45">last_error()</a></i>
+<br /><br />
+
+<a name="16"></a>
+<h3><font color="red">grant_permissions()</font>
+<h4>(void grant_permissions ( $action, $username, $password [, $newpass] ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function allows for the manipulation of <i>$user</i>; it can either add a user, drop, or edit a user.<br>
+<i>$action</i> can be one of either add, edit, or drop.<br /><br />
+
+<li>If it is 'add', then <i>$username</i> will be the new user's name, and <i>$password</i> will be his/her password<br>
+<li>If it is 'drop', then <i>$username</i> must be specified, and so does <i>$password</i> (password for this user).
+<li>If it is 'edit', then <i>$username</i> must be specified, along with <i>$password</i>, and <i>$newpass</i>. The new password would be
+<i>$newpass</i>.<br /><br />
+
+<b>Note</b>- If you are dropping, or editing a user, and the incorrect password is specified, OR when adding a user and the user already exists, then txtSQL will issue a warning and return <i>false</i>.<br />
+<b>Note</b>- You can never drop the user 'root'<br />
+<b>Note</b>- In txtSQL <= 2.2.0 Beta, setting an empty password would incorrectly save, do not set empty passwords before this.
+<br /><br />
+
+<a name="30"></a>
+<h3><font color="red">insert()</font>
+<h4>(void  insert( array( 'table' => $table, 'values' => $values [, 'db' => $db] ) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will insert a row of data, containing the <i>$values</i> given, into an existing txtSQL database. The <i>$values</i> must be an array in the following format<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>array([$column => $value]...)</i><br /><br />
+
+where <i>$column</i> is the name of the column that txtSQL will insert into, and <i>$value</i> is the value for that corressponding column. If the column does not exist, txtSQL will issue an error.<br /><br />
+If a column is of type <i><a href="#5">auto_increment</a></i>, txtSQL will automatically increment that column.
+If a column is of type <i><a href="#5">enum</a></i> and the value being inserted does not exist as one of the enum values, the last value from the enum list is inserted.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- If the value does not match the data type (i.e. a string being inserted into an integer column), txtSQL will automatically format the value<br />
+<b>Note</b>- If a column is set to permanent, you will not be able to change this value<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="24"></a>
+<h3><font color="red">isLocked()</font>
+<h4>(bool isLocked ( $database ))</h4>
+<h5>txtSQL >= 2.2.0 Beta</h5></h3>
+This function will return <i>TRUE</i> if <i>$database</i> has a file lock on it, and false otherwise. A file lock is basically a file created that tells txtSQL that it is locked.
+<br /><br />
+
+<a name="45"></a>
+<h3><font color="red">last_error()</font>
+<h4>(void last_error())</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+This function will print the last error message that txtSQL issued<br/><br />
+<b>Note</b>- To retrieve the last error rather than print it, use <i><a href="#44">get_last_error()</a></i>
+<br /><br />
+
+<a name="51"></a>
+<h3><font color="red">last_insert_id()</font>
+<h4>(int last_insert_id ( $table[, $db, [, $column]] ))</h4>
+<h5>txtSQL >= 2.2 Final</h5></h3>
+This function will retrieve the last ID generated by a primary key in a <i>$table</i>. If <i>$column</i> is specified, then txtSQL will return the last ID generated by that column instead of the primary key; if this <i>$column</i> is not auto_increment, then txtSQL will issue an error.
+<br /><br />
+
+<a name="25"></a>
+<h3><font color="red">lockdb()</font>
+<h4>(void lockDB ( $database ))</h4>
+<h5>txtSQL >= 2.2.0 Beta</h5></h3>
+This function will return <i>TRUE</i> if <i>$database</i> was successfully locked and <i>FALSE</i> otherwise. A file lock is basically a file created that tells txtSQL that it is locked.
+<br /><br />
+
+<a name="50"></a>
+<h3><font color="red">query_count()</font>
+<h4>(int query_count (  ))</h4>
+<h5>txtSQL >= 2.2 Final</h5></h3>
+This function will return the number of queries that txtSQL evaluated thus far in script execution. This includes any unsuccessfull queries as well.
+<br /><br />
+
+<a name="23"></a>
+<h3><font color="red">renamedb()</font>
+<h4>(bool renamedb ( array( $olddb, $newdb ) ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function will rename a txtSQL database, <i>$dbname</i>, to the given name, <i>$newdb</i>.
+<br /><br />
+<b>Note</b>- This function will return <i>false</i> if the database doesn't already exists, or if the new database name already exists
+<br /><br />
+
+<a name="29"></a>
+<h3><font color="red">select()</font>
+<h4>(mixed select ( array( 'table' => $table [, 'select' => $selectCols[, 'db' => $db [, 'where' => $where [, 'limit' => $limit [, 'orderby' => $orderb[, $distinct = $column]]]]] ) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will retrieve data that matches the $where clause; if no <i>$where</i> clause is given, all rows match, and thus will be returned. If <i>$selectCols</i> is specified, then txtSQL will only select those columns. <i>$selectCols</i> should be an array with the following structure<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array ( col1, col2 ... )
+
+<br /><br />The search will look inside the selected database if no <i>$db</i> is defined, and will return rows according to the <i><a href="#10">limit clause</a></i>. If <i>$orderby</i> is specified, then the results will be sorted according to the <i><a href="index.php?f=11">orderby clause</a></i>. If <i>$distinct</i> is set to <i>TRUE</i>, then the any repeated values for that <i>$column</i> will be deleted.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- The DISTINCT feature was added in txtSQL 2.2 Final release<br />
+<b>Note</b>- For more information on defining a where clause, see the <a href="#8"><i>'where clause'</i></a> section, or for defining a limit clause, see <i>
+<a href="#10">how to create a limit clause</i></a> section<br />
+<b>Note</b>- If no database is selected, and no <i>$db</i> is given, txtSQL will issue an error
+<br /><br />
+
+<a name="27"></a>
+<h3><font color="red">selectdb()</font>
+<h4>(void selectdb ( $database ))</h4>
+<h5>txtSQL >= 2.2.0 Beta</h5></h3>
+This function will return <i>TRUE</i> if <i>$database</i> was successfully selected and <i>FALSE</i> otherwise. The useful part of this function is the fact that if a database is 'selected' using <i>selectdb()</i>, then in queries such as <a href="#29">select()</a>, there is no need to specify a database.
+<br /><br />
+<b>Note</b>- This function will return <i>FALSE</i> if the database doesn't exist
+<br /><br />
+
+<a name="20"></a>
+<h3><font color="red">showdbs()</font>
+<h4>(mixed showdbs ())</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function, when called, will return an array filled with a list of current txtSQL databases which are located inside of the current working directory.
+<br /><br />
+<b>Note</b>- This function will not return the database 'txtsql', as it is an internal working db
+<br /><br />
+
+<a name="35"></a>
+<h3><font color="red">showtables()</font>
+<h4>(mixed showtables ( array (['db' => $db]) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function returns a list of tables inside a txtSQL database. If no database is given, txtSQL will search the selected database.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="43"></a>
+<h3><font color="red">strict()</font>
+<h4>(void strict ( $mode ))</h4>
+<h5>txtSQL >= 1.0.0</h5></h3>
+When txtSQL encounters any type of error, it prints it to the webbrowser. If you want to surpress these error/warning messages, set <i>$mode</i> to <i>FALSE</i> or to turn it on, set <i>$mode</i> to <i>TRUE</i>.
+<br /><br />
+
+<a name="40"></a>
+<h3><font color="red">table_count()</font>
+<h4>(int table_count ( $table [, $db]) ))</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function will return the number of records inside of a txtSQL table. It will look inside the <i>$db</i> if specified, and if not, txtSQL will look in the selected database.<br /><br />
+
+<b>Note</b>- If <i>$tablename</i> does not already exists, txtSQL will issue an error<br />
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="49"></a>
+<h3><font color="red">table_exists()</font>
+<h4>(bool table_exists ( $table, $db ))</h4>
+<h5>txtSQL >= 2.2 Final</h5></h3>
+This function will return <i>TRUE</i> if the <i>$table</i> exists inside of <i>$database</i>, and <i>FALSE</i> otherwise
+<br /><br />
+
+<a name="26"></a>
+<h3><font color="red">unlockdb()</font>
+<h4>(void unlockdb ( $database ))</h4>
+<h5>txtSQL >= 2.2.0 Beta</h5></h3>
+This function will return <i>TRUE</i> if <i>$database</i> was successfully unlocked and <i>FALSE</i> otherwise. A file lock is basically a file created that tells txtSQL that it is locked.
+<br /><br />
+
+<a name="31"></a>
+<h3><font color="red">update()</font>
+<h4>(int update ( array( 'table' => $table, $where => $where, 'values' => $values [, 'limit' => $limit [, 'db' => $db]] ) ))</h4>
+<h5>txtSQL >= 2.2.2 RC2</h5></h3>
+This function will update a row that matches the <i>$where</i> clause with the new information given in the <i>$values</i>, and returns the number of rows updated. The <i>$values</i> must be an array in the following format<br /><br />
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>array([$column => $value]...)</i><br /><br />
+
+where <i>$column</i> is the name of the column that txtSQL will insert into, and <i>$value</i> is the value for that
+corressponding column. If the column does not exist, txtSQL will issue an error.<br /><br />
+
+If a <i>$limit</i> is defined, then txtSQL will stop updating rows and return the number of rows updated at the <i>$limit</i>. NOTE- This limit only needs one value (i.e. array(20) stops at 21 rows) unlike a regular limit clause.<br /><br />
+If a column is of type <i><a href="#4">enum</a></i> and the value being updated does not exist as one of the enum values, the last value from the enum list is inserted.<br /><br />
+
+<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="#33">execute()</a></i> function<br />
+<b>Note</b>- For more information on defining a where clause, see the <i><a href="#8">how to create a where clause</a></i> section<br />
+<b>Note</b>- If the value does not match the data type (i.e. a string being updated in an integer column), txtSQL will automatically format the value<br />
+<b>Note</b>- If a column is set to permanent, you will not be able to change this value<br>
+<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+<br /><br />
+
+<a name="18"></a>
+<h3><font color="red">version()</font>
+<h4>(int version ())</h4>
+<h5>txtSQL >= 2.0.0 Beta</h5></h3>
+This function returns an integer which represents the running txtSQL version
+<br /><br />
+
+</div></td></tr></table>

@@ -1,0 +1,191 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Functions : isLocked</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>isLocked</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<a href="1.html">'Language Reference'</a><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<b><a href="19.html">Database Functions</a></b><br />
+			<li><a href="20.html">showdbs</a></li><br />
+			<li><a href="21.html">createdb</a></li><br />
+			<li><a href="22.html">dropdb</a></li><br />
+			<li><a href="23.html">renamedb</a></li><br />
+			<li><b>isLocked</b></li><br />
+			<li><a href="25.html">lockdb</a></li><br />
+			<li><a href="26.html">unlockdb</a></li><br />
+			<li><a href="27.html">selectdb</a></li><br />
+			<li><a href="48.html">db_exists</a></li><br />
+			<br />
+
+			<a href="28.html">Data Manipulation Functions</a><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="23.html">Last Section ( renamedb )</a></td>
+					<td align="center" width="33%"><font size="6">isLocked</font></td>
+					<td align="right" width="33%"><a href="25.html">Next Section ( lockdb )</a> >></td>
+				</tr>
+			</table>
+
+			<table width="100%" cellpadding="3" cellspacing="0" border="0" style="border:1px solid;border-color:#BBBBBB;">
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Usage</b></td>
+					<td><i>bool</i> isLocked ( $database )</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Purpose</b></td>
+					<td>To check whether a database is locked or not</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Availability</b></td>
+					<td>txtSQL >= 2.2.0 Beta</td>
+				</tr>
+			</table>
+			<BR />
+
+			This function will return <i>TRUE</i> if <i>$database</i> has a file lock on it, and false otherwise. A file lock is basically a file created that tells txtSQL that it is locked.
+			<br /><br/>
+
+
+			<table width="100%" cellspacing="1" cellpadding="3">
+				<tr>
+					<td align="left"><b>Example 11: isLocked()</b>
+					<td align="right"><a href="javascript: ClipBoard(copytext1)">Copy to Clipboard</a></td>
+				</tr>
+				<tr>
+					<td colspan="2" bgcolor="#F4F4F4" style="border: 1px solid; border-color: #BBBBBB" id="copytext1">
+						<code><font color="#000000">
+						<font color="#0000BB">&lt;?php<br /></font><font color="#007700">if ( </font><font color="#0000BB">$sql</font><font color="#007700">-&gt;</font><font color="#0000BB">isLocked</font><font color="#007700">(</font><font color="#DD0000">'testDB'</font><font color="#007700">) ) <br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;print </font><font color="#DD0000">'testDB is locked'</font><font color="#007700">;<br />}<br />else <br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;print </font><font color="#DD0000">'testDB is NOT locked'</font><font color="#007700">; <br />}<br /></font><font color="#0000BB">?&gt;</font>
+						</font>
+						</code>
+					</td>
+				</tr>
+			</table>
+			<br />
+
+
+			<TEXTAREA ID="holdtext" STYLE="display:none;"></TEXTAREA>
+
+			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>isLocked()</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('24');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center" bgcolor="#EBEBEB"><font face="courier new" size="2">No comments found; </font></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

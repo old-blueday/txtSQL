@@ -1,0 +1,207 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Functions : select</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>select</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<a href="1.html">'Language Reference'</a><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<a href="19.html">Database Functions</a><br />
+			<br />
+
+			<b><a href="28.html">Data Manipulation Functions</a></b><br />
+			<li><b>select</b></li><br />
+			<li><a href="30.html">insert</a></li><br />
+			<li><a href="31.html">update</a></li><br />
+			<li><a href="32.html">delete</a></li><br />
+			<li><a href="33.html">execute</a></li><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="28.html">Last Section ( Data Manipulation Functions )</a></td>
+					<td align="center" width="33%"><font size="6">select</font></td>
+					<td align="right" width="33%"><a href="30.html">Next Section ( insert )</a> >></td>
+				</tr>
+			</table>
+
+			<table width="100%" cellpadding="3" cellspacing="0" border="0" style="border:1px solid;border-color:#BBBBBB;">
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Usage</b></td>
+					<td><i>mixed</i> select ( array( 'table' => $table [, 'select' => $selectCols[, 'db' => $db [, 'where' => $where [, 'limit' => $limit [, 'orderby' => $orderb[, $distinct = $column]]]]] ) )</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Purpose</b></td>
+					<td>To select data from a txtSQL table</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Availability</b></td>
+					<td>txtSQL >= 2.2.2 RC2</td>
+				</tr>
+			</table>
+			<BR />
+
+			This function will retrieve data that matches the $where clause; if no <i>$where</i> clause is given, all rows match, and thus will be returned. If <i>$selectCols</i> is specified, then txtSQL will only select those columns. <i>$selectCols</i> should be an array with the following structure<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array ( col1, col2 ... )
+			
+			<br /><br />The search will look inside the selected database if no <i>$db</i> is defined, and will return rows according to the <i><a href="10">limit clause</a></i>. If <i>$orderby</i> is specified, then the results will be sorted according to the <i><a href="index.php?f=11.html">orderby clause</a></i>. If <i>$distinct</i> is set to <i>TRUE</i>, then the any repeated values for that <i>$column</i> will be deleted.<br /><br />
+			
+			<b>Important</b>- To achieve the same results as this function before txtSQL 2.2.2 RC2, use the <i><a href="33.html">execute()</a></i> function<br />
+			<b>Note</b>- The DISTINCT feature was added in txtSQL 2.2 Final release<br />
+			<b>Note</b>- For more information on defining a where clause, see the <a href="8.html"><i>'where clause'</i></a> section, or for defining a limit clause, see <i>
+			<a href="10.html">how to create a limit clause</i></a> section<br />
+			<b>Note</b>- If no database is selected, and no <i>$db</i> is given, txtSQL will issue an error
+			<br /><br/>
+
+
+			<table width="100%" cellspacing="1" cellpadding="3">
+				<tr>
+					<td align="left"><b>Example 15: select()</b>
+					<td align="right"><a href="javascript: ClipBoard(copytext1)">Copy to Clipboard</a></td>
+				</tr>
+				<tr>
+					<td colspan="2" bgcolor="#F4F4F4" style="border: 1px solid; border-color: #BBBBBB" id="copytext1">
+						<code><font color="#000000">
+						<font color="#0000BB">&lt;?php <br />$data </font><font color="#007700">= </font><font color="#0000BB">$sql</font><font color="#007700">-&gt;</font><font color="#0000BB">select</font><font color="#007700">(array( <br />&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'db'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#007700">=&gt; </font><font color="#DD0000">'testDB'</font><font color="#007700">, <br />&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'table'&nbsp;&nbsp;&nbsp;</font><font color="#007700">=&gt; </font><font color="#DD0000">'testTable'</font><font color="#007700">, <br />&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'where'&nbsp;&nbsp;&nbsp;</font><font color="#007700">=&gt; array(</font><font color="#DD0000">'strtolower(somecolumn) = value'</font><font color="#007700">), <br />&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'limit'&nbsp;&nbsp;&nbsp;</font><font color="#007700">=&gt; array(</font><font color="#0000BB">10</font><font color="#007700">, </font><font color="#0000BB">19</font><font color="#007700">), <br />&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'orderby' </font><font color="#007700">=&gt; array(</font><font color="#DD0000">'id'</font><font color="#007700">, </font><font color="#DD0000">'ASC'</font><font color="#007700">) <br />&nbsp;&nbsp;&nbsp;&nbsp;)); <br /><br />foreach ( </font><font color="#0000BB">$data </font><font color="#007700">as </font><font color="#0000BB">$key </font><font color="#007700">=&gt; </font><font color="#0000BB">$row </font><font color="#007700">) <br />{ <br />&nbsp;&nbsp;&nbsp;&nbsp;print </font><font color="#DD0000">'Row '</font><font color="#007700">.</font><font color="#0000BB">$key</font><font color="#007700">.</font><font color="#DD0000">': '</font><font color="#007700">.</font><font color="#0000BB">print_r</font><font color="#007700">(</font><font color="#0000BB">$row</font><font color="#007700">,</font><font color="#0000BB">1</font><font color="#007700">).</font><font color="#DD0000">"&lt;br&gt;\n"</font><font color="#007700">; <br />} <br /></font><font color="#0000BB">?&gt;</font>
+						</font>
+						</code>
+					</td>
+				</tr>
+			</table>
+			<br />
+
+
+			<TEXTAREA ID="holdtext" STYLE="display:none;"></TEXTAREA>
+
+			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>select()</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('29');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td bgcolor="#E0E0E0" colspan="2">
+						<b>FarazAli</b> <font size="1">&lt;Faraz87 at comcast dot net&gt;<br />
+						July 30, 2004, 11:19 pm</font>
+						<table width="100%" cellspacing="0" cellpadding="3">
+							<tr>
+								<td bgcolor="#F0F0F0">
+									<font face="courier new" size="3"><code><font color="#000000">
+You can specify what columns you want to select by adding something like<br /><br />'select' =&gt; array('column', 'column2' ...)<br /><br />to the array.<br /><br />Example:<br />$sql-&gt;select(array(<br />&nbsp;&nbsp;&nbsp;&nbsp;'select' =&gt; array('id', 'name'),<br />&nbsp;&nbsp;&nbsp;&nbsp;'table'&nbsp;&nbsp;=&gt; 'data',<br />&nbsp;&nbsp;&nbsp;&nbsp;'db'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; 'testDB'<br />));</font>
+</code></font>								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<html>
+<head>
+<style>
+A
+{
+
+	text-decoration: none; color: 003265;
+}
+
+A:hover
+{
+
+	text-decoration: underline; color: 000000;
+}
+
+
+td, body, input
+{
+
+	font-family: Trebuchet MS, Arial; font-size: 11px;
+}
+
+
+.headerLinks
+{
+
+	color: white; font-weight: bold;
+}
+
+.headerLinks:hover
+{
+
+	color: #FFFFFF;
+}
+
+input, textarea
+{
+	border: 1px solid; border-color: #BBBBBB; background-color: #F0F0F0;
+}
+
+textarea
+{
+	font-size: 12px;
+}
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function ClipBoard( area )
+{
+	holdtext.innerText = area.innerText;
+	Copied             = holdtext.createTextRange();
+
+	if ( Copied.execCommand("Copy") == true )
+	{
+		alert('Text copied to clipboard successfully');
+	}
+}
+
+function openAddNoteWindow ( funcID )
+{
+	var w   = 500, h = 500;
+	var top = ( screen.height - h ) / 2 - 15, left = ( screen.width - w ) / 2;
+
+	if ( top < 0 )
+	{
+		top = 0;
+	}
+
+	if ( left < 0 )
+	{
+		left = 0;
+	}
+
+	window.open('index.php?a=addnote&f=' + funcID,
+		    'AddNote',
+		    'width=' + w + ',height=' + h + ',top=' + top + ', left=' + left + ',scrollbars=yes');
+}
+</SCRIPT>
+<title>txtSQL Documentation Functions : execute</title>
+</head>
+<body bgcolor="FFFFFF" leftmargin="0" topmargin="0" rightmargin="0" bottommargin="0">
+
+<table width="100%" cellspacing="0" cellpadding="3"
+	<tr bgcolor="003265">
+		<td><font color="white"><b>execute</b></font></td>
+		<td align="right">
+			<a href="javascript:history.back()" class="headerLinks">Back</a>
+			<font color="white"> | <a href="javascript:history.forward()" class="headerLinks">Forward</a> |
+			<a href="index.html" class="headerLinks">Home</a>
+		</td>
+	</tr>
+	<tr>
+		<td height="8" background="shadow.gif" colspan="2">
+		</td>
+	</tr>
+</table>
+<br />
+
+<table width="95%" cellspacing="1" cellpadding="3" align="center">
+	<tr valign="top">
+		<td width="125" style="border:1px solid; border-color: #BBBBBB" bgcolor="#FAFAFA">
+			<a href="1.html">'Language Reference'</a><br />
+			<br />
+
+			<a href="13.html">User Functions</a><br />
+			<br />
+
+			<a href="19.html">Database Functions</a><br />
+			<br />
+
+			<b><a href="28.html">Data Manipulation Functions</a></b><br />
+			<li><a href="29.html">select</a></li><br />
+			<li><a href="30.html">insert</a></li><br />
+			<li><a href="31.html">update</a></li><br />
+			<li><a href="32.html">delete</a></li><br />
+			<li><b>execute</b></li><br />
+			<br />
+
+			<a href="34.html">Table Functions</a><br />
+			<br />
+
+			<a href="42.html">Error Handling Functions</a><br />
+
+		<br />		</td>
+		<td style="padding-left: 35px;">
+			<table width="100%">
+				<tr valign="bottom">
+					<td align="left" width="33%"><< <a href="32.html">Last Section ( delete )</a></td>
+					<td align="center" width="33%"><font size="6">execute</font></td>
+					<td align="right" width="33%"><a href="34.html">Next Section ( Table Functions )</a> >></td>
+				</tr>
+			</table>
+
+			<table width="100%" cellpadding="3" cellspacing="0" border="0" style="border:1px solid;border-color:#BBBBBB;">
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Usage</b></td>
+					<td><i>mixed</i> execute ( $action [, $args] )</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Purpose</b></td>
+					<td>To execute a txtSQL command and get results</td>
+				</tr>
+				<tr bgcolor="#F4F4F4" align="left">
+					<td width="75"><b>Availability</b></td>
+					<td>txtSQL >= 2.0.0 Beta</td>
+				</tr>
+			</table>
+			<BR />
+
+			This function will execute a valid txtSQL command and return that function's results. The list of valid <i>$action</i>'s are
+			<a href="29.html">'select'</a>,
+			<a href="30.html">'insert'</a>,
+			<a href="31.html">'update'</a>,
+			<a href="32.html">'delete'</a>,
+			<a href="20.html">'show databases'</a>,
+			<a href="21.html">'create database'</a>,
+			<a href="22.html">'drop database'</a>,
+			<a href="23.html">'rename database'</a>,
+			<a href="35.html">'show tables'</a>,
+			<a href="36.html">'create table'</a>,
+			<a href="37.html">'drop table'</a>,
+			<a href="38.html">'alter table'</a>,
+			and <a href="39.html">'describe'</a>.<br /><br />
+			The <i>$args</i> is the same arguments as if you were using the function seperately. Click a function for more information on what is to be defined in the <i>$args</i><br /><br />
+			
+			<b>Note</b>- For more information on defining a where clause, see the <i><a href="8.html">how to create a where clause</a></i> section, or for defining a limit clause, see 
+			<i><a href="8.html">how to create a limit clause</i></a> section<br>
+			<b>Note</b>- If no <i>$db</i> is specified and no database is already selected, txtSQL will issue an error
+			<br /><br/>
+
+
+			<table width="100%" cellspacing="1" cellpadding="3">
+				<tr>
+					<td align="left"><b>Example 19: execute() with 'select' as action</b>
+					<td align="right"><a href="javascript: ClipBoard(copytext1)">Copy to Clipboard</a></td>
+				</tr>
+				<tr>
+					<td colspan="2" bgcolor="#F4F4F4" style="border: 1px solid; border-color: #BBBBBB" id="copytext1">
+						<code><font color="#000000">
+						<font color="#0000BB">&lt;?php <br />$data </font><font color="#007700">= <br /></font><font color="#0000BB">$sql</font><font color="#007700">-&gt;</font><font color="#0000BB">execute</font><font color="#007700">(</font><font color="#DD0000">'select'</font><font color="#007700">, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array(</font><font color="#DD0000">'table' </font><font color="#007700">=&gt; </font><font color="#DD0000">'testTable'</font><font color="#007700">, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'db'&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#007700">=&gt; </font><font color="#DD0000">'testDb'</font><font color="#007700">, <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#DD0000">'where' </font><font color="#007700">=&gt; array(</font><font color="#DD0000">'strtolower(name) = john doe'</font><font color="#007700">))); <br /><br /></font><font color="#0000BB">print_r</font><font color="#007700">(</font><font color="#0000BB">$data</font><font color="#007700">); <br /></font><font color="#0000BB">?&gt;</font>
+						</font>
+						</code>
+					</td>
+				</tr>
+			</table>
+			<br />
+
+
+			<TEXTAREA ID="holdtext" STYLE="display:none;"></TEXTAREA>
+
+			<table width="100%" cellspacing="1" cellpadding="3" border="0" bgcolor="D0D0D0" align="center">
+				<tr>
+					<td><font size="1">User-Contributed Comments for: </font><br><b>execute()</b></td>
+					<td align="right" valign="top"><a href="javascript: openAddNoteWindow('33');"> <font size="1" style="text-decoration:underline;"></font></a></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center" bgcolor="#EBEBEB"><font face="courier new" size="2">No comments found; </font></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+<br />
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+td, body, input, textarea {
+	font-family: Trebuchet MS;
+	font-size:   11px;
+	color:       #515151;
+}
+
+input.btn {
+	font-family:      Trebuchet MS;
+	font-size:        11px;
+	font-weight:      bold;
+	border:           1px solid;
+	background-color: #BFBFBF;
+	color:            #000000;
+	border-color:     #404040;
+
+	filter:progid:DXImageTransform.Microsoft.Gradient (
+			GradientType=1, StartColorStr='#BFBFBF', EndColorStr='#E1E1E1'
+	);
+}
+
+input, .sel, textarea {
+	border:              1px solid;
+	border-color:        #BFBFBF;
+	border-right-color:  #E1E1E1;
+	border-bottom-color: #E1E1E1;
+	background-color:    #F3F3F3;
+	font-family:         Trebuchet MS;
+	font-size:           11px;
+	font-weight:         bold;
+	font-size:           11px;
+	color:               #515151
+}
+
+A {
+	text-decoration: none;
+	color:           353535;
+	font-weight:     bold;
+}
+
+A:hover {
+	text-decoration: underline;
+	color:           666666;
+}
+
+.header {
+	color: 303030;
+}
+
+textarea {
+	font-weight: normal;
+}
